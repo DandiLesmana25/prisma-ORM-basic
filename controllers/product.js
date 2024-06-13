@@ -1,8 +1,11 @@
+const { getAllProducts } = require('../models/productsModels');
+
 const getProducts = async (request, response) => {
   try {
-    response.status(200).json({
-      message: "product list",
-    });
+    const products = await getAllProducts();
+    // const products = await getAllProducts;
+    response.status(200).json(products);
+
   } catch (error) {
     response.status(500).json({ msg: error.message });
   }
@@ -19,11 +22,17 @@ const getProductById = async (request, response) => {
 };
 
 const createProduct = async (request, response) => {
-  const { name } = request.body;
+  const { title, content, published } = request.body;
   try {
-    response.status(201).json({
-      message: `create product ${name}`,
-    });
+    const product = await prisma.product.create({
+      data: {
+        title,
+        content,
+        published
+      }
+    })
+    response.status(201).json(product);
+
   } catch (error) {
     response.status(400).json({ msg: error.message });
   }
