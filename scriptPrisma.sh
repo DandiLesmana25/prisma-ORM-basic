@@ -11,3 +11,6 @@ npx prisma generate
 
 #untuk update perubahan pada schema database
 npx prisma db push
+
+#refresh and seed database
+npx prisma migrate reset
